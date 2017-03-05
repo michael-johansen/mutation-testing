@@ -1,0 +1,72 @@
+✔ Mutation testing @done (17-01-24 13:27)
+ ✔ What is it? @done (17-01-24 13:27)
+   ✔ Introduce subtle(?) bugs in production code @done (17-01-24 13:28)
+    ✔ Examples from pitest (tool): @done (17-01-24 14:02)
+     ✔ Conditionals Boundary Mutator (< into <=,<= into <, etc..) @done (17-01-24 13:28)
+     ✔ Increments Mutator (i++ into i--) @done (17-01-24 13:28)
+     ✔ Invert Negatives Mutator (-i into i) @done (17-01-24 13:28)
+     ✔ Math Mutator (+ into -, * into /, etc..) @done (17-01-24 13:29)
+     ✔ Negate Conditionals Mutator (== into !=, <= into >, etc) @done (17-01-24 13:29)
+     ✔ Return Values Mutator (replaces return value based on type, Object into null, true into false, number into number +1) @done (17-01-24 13:29)
+     ✔ Void Method Calls Mutator (removes calls to ) @done (17-01-24 13:29)
+   ✔ Run tests @done (17-01-24 13:28)
+   ✔ Unit tests should fail @done (17-01-24 13:28)
+ ✔ Why? @done (17-01-24 14:02)
+   ✔ Unit test coverage is often used as metric of code quality @done (17-01-24 13:30)
+     ✔ This is bad because you can have high unit test coverage without useful assertions @done (17-01-24 13:30)
+       ✔ Example: Integration test without any assertions @done (17-01-24 13:30)
+   ✔ Find code that is not well covered @done (17-01-24 13:31)
+ ✔ Challenges @done (17-01-24 14:02)
+   ✔ Big codebase can have many possible mutations @done (17-01-24 13:31)
+   ✔ Running unit tests for each mutation can take a long time @done (17-01-24 13:31)
+     ✔ CAP-size project: 14657 mutations * 1 minute to compile changes and run tests = ~10.1 days @done (17-01-24 13:31)
+================================================================================
+> scan classpath : < 1 second
+> coverage and dependency analysis : 30 seconds
+> build mutation tests : 4 seconds
+> run mutation analysis : 20 minutes and 55 seconds
+--------------------------------------------------------------------------------
+> Total  : 21 minutes and 30 seconds
+--------------------------------------------------------------------------------
+================================================================================
+- Statistics
+================================================================================
+>> Generated 14657 mutations Killed 7073 (48%)
+>> Ran 21435 tests (1.46 tests per mutation)
+================================================================================
+
+
+✔ PiTest @done (17-01-24 13:32)  
+   ✔ Implementation @done (17-01-24 13:32)
+     ✔ Compile code to bytecode @done (17-01-24 13:32)
+     ✔ Run each test separately with coverage (31 seconds for cap) @done (17-01-24 13:32)
+       ✔ 2 way mapping between Test and CodeLines @done (17-01-24 13:32)
+     ✔ For each mutator @done (17-01-24 13:33)
+       ✔ For each modification point (code line) @done (17-01-24 13:33)
+         ✔ Modify byte code line @done (17-01-24 13:33)
+         ✔ Run tests that touch code (small subset of all tests) @done (17-01-24 13:33)
+           ✔ Kill mutation if test fails @done (17-01-24 13:33)
+     ✔ List all surviving mutations @done (17-01-24 13:34)
+     ✔ Runtime: 20 min for cap @done (17-01-24 13:33)
+   ✔ Additional features @done (17-01-24 13:34)
+     ✔ Optional: Only include lines that have changed from version control @done (17-01-24 13:34)
+   ✔ Apendix: @done (17-01-24 14:02)
+     ✔ maven plugin: // @done (17-01-24 14:02)
+        mvn test org.pitest:pitest-maven:mutationCoverage
++      <plugin>
++        <groupId>org.pitest</groupId>
++        <artifactId>pitest-maven</artifactId>
++        <version>1.1.11</version>
++        <configuration>
++          <targetClasses>
++            <param>no.cicero.cap.*</param>
++          </targetClasses>
++          <targetTests>
++            <param>no.cicero.cap.*</param>
++          </targetTests>
++          <timestampedReports>false</timestampedReports>
++          <withHistory>true</withHistory>
++        </configuration>
++      </plugin>
+ ✔ PR for Cap: https://stash.cicero.no/projects/CICADVISORY/repos/cap/pull-requests/1581/overview @done (17-01-24 14:02)
+
